@@ -57,30 +57,24 @@ public class CadastroTeste {
 		Login login = new Login(1l, "thiago2021@gmail.com", "#@123vamoscriptograr^");
 		Dispositivo dipositivo = new Dispositivo(1l, "DeviceWearableDoThiago");
 		Chamado chamado = new Chamado(StatusEnum.PENDENTES, ChamadoEnum.EMERGENCIAEXTREMA, Calendar.getInstance());
-		ChamadoUsuario chamadoUsuario = new ChamadoUsuario(1l, 1l, Calendar.getInstance(), 2l);
+		ChamadoUsuario chamadoUsuario = new ChamadoUsuario(1l, 1l, Calendar.getInstance(), 2l, 
+				ChamadoEnum.EMERGENCIAEXTREMA, StatusEnum.PENDENTES);
 		
 		//Persistindo objetos
 		try {
 			setorDao.create(setor);
-			setorDao.commit();
-			
+					
 			cargoDao.create(cargo);
-			cargoDao.commit();
-			
+						
 			ambienteDao.create(ambiente);
-			ambienteDao.commit();
-			
+				
 			usuarioDao.create(usuario);
-			usuarioDao.commit();
-			
+					
 			loginDao.create(login);
-			loginDao.commit();
-			
+				
 			dispositivoDao.create(dipositivo);
-			dispositivoDao.commit();
-			
+				
 			chamadoDao.create(chamado);
-			chamadoDao.commit();
 			
 			chamadoUsuarioDao.create(chamadoUsuario);
 			chamadoUsuarioDao.commit();

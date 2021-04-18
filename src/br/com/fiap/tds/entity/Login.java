@@ -18,6 +18,10 @@ public class Login {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "login")
 	private Long id;
 	
+	/**
+	 * Esta coluna (representada abaixo) foi colocada apenas para representar a modelagem do banco de dados
+	 * ao criar os relacionamentos de fato, isso será alterado
+	 */
 	@Column(name = "id_usuario",  nullable = false)
 	private Long idUsuario;
 	

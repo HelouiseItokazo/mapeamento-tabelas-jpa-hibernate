@@ -29,15 +29,13 @@ public class Chamado {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chamado")
 	private Long id;
 	
-	//TODO VERIFICAR
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_status", nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ds_status_chamado", nullable = false)
 	private StatusEnum status;
 	
-	//TODO VERIFICAR
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_tipo_chamado", nullable = false)
-	private ChamadoEnum tipoChamado;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ds_nvl_chamado", nullable = false)
+	private ChamadoEnum nivelChamado;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -46,14 +44,14 @@ public class Chamado {
 
 	public Chamado() {}
 
-	public Chamado(StatusEnum status, ChamadoEnum tipoChamado, Calendar dataEHora) {
+	public Chamado(StatusEnum status, ChamadoEnum nivelChamado, Calendar dataEHora) {
 		this.status = status;
-		this.tipoChamado = tipoChamado;
+		this.nivelChamado = nivelChamado;
 		this.dataEHora = dataEHora;
 	}
 
-	public Chamado(Long id, StatusEnum status, ChamadoEnum tipoChamado, Calendar dataEHora) {
-		this(status, tipoChamado, dataEHora);
+	public Chamado(Long id, StatusEnum status, ChamadoEnum nivelChamado, Calendar dataEHora) {
+		this(status, nivelChamado, dataEHora);
 		this.id = id;
 	}
 
@@ -74,11 +72,11 @@ public class Chamado {
 	}
 
 	public ChamadoEnum getTipoChamado() {
-		return tipoChamado;
+		return nivelChamado;
 	}
 
-	public void setTipoChamado(ChamadoEnum tipoChamado) {
-		this.tipoChamado = tipoChamado;
+	public void setTipoChamado(ChamadoEnum nivelChamado) {
+		this.nivelChamado = nivelChamado;
 	}
 
 	public Calendar getDataEHora() {

@@ -18,9 +18,17 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario")
 	private Long id;
 	
+	/**
+	 * Esta coluna (representada abaixo) foi colocada apenas para representar a modelagem do banco de dados
+	 * ao criar os relacionamentos de fato, isso será alterado
+	 */
 	@Column(name = "id_cargo", nullable = false)
 	private Long idCargo;
 	
+	/**
+	 * Esta coluna (representada abaixo) foi colocada apenas para representar a modelagem do banco de dados
+	 * ao criar os relacionamentos de fato, isso será alterado
+	 */
 	@Column(name = "id_setor", nullable = false)
 	private Long idSetor;
 	
