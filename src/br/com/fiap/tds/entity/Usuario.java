@@ -1,10 +1,25 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,25 +33,42 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario")
 	private Long id;
 	
-	@Column(name = "id_cargo", nullable = false)
-	private Long idCargo;
+	@ManyToOne
+	@JoinColumn(name = "id_cargo", nullable = false)
+	private Cargo cargo;
 	
-	@Column(name = "id_setor", nullable = false)
-	private Long idSetor;
+	@ManyToOne
+	@JoinColumn(name = "id_setor", nullable = false)
+	private Setor setor;
+	
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private Dispositivo dispostivo;
 	
 	@Column(name = "nm_usuario", length = 100, nullable = false)
 	private String nome;
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private List<ChamadoUsuario> chamadosUsuario;
+	
+	public void addChamadoUsuario(ChamadoUsuario chamado) {
+		if (this.chamadosUsuario == null) {
+			this.chamadosUsuario = new ArrayList<ChamadoUsuario>();
+			
+			chamado.setUsuario(this);
+			chamadosUsuario.add(chamado);
+		}
+	}
 
 	public Usuario() {}
 
-	public Usuario(Long idCargo, Long idSetor, String nome) {
-		this.idCargo = idCargo;
-		this.idSetor = idSetor;
+	public Usuario(Cargo cargo, Setor setor, String nome) {
+		this.cargo = cargo;
+		this.setor = setor;
 		this.nome = nome;
 	}
 
-	public Usuario(Long id, Long idCargo, Long idSetor, String nome) {
-		this(idCargo, idSetor, nome);
+	public Usuario(Long id, Cargo cargo, Setor setor, String nome) {
+		this(cargo, setor, nome);
 		this.id = id;
 	}
 
@@ -56,20 +88,30 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public Long getIdCargo() {
-		return idCargo;
+	public Cargo getCargo() {
+		return cargo;
 	}
 
-	public void setIdCargo(Long idCargo) {
-		this.idCargo = idCargo;
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
 	}
 
-	public Long getIdSetor() {
-		return idSetor;
+	public Setor getSetor() {
+		return setor;
 	}
 
-	public void setIdSetor(Long idSetor) {
-		this.idSetor = idSetor;
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
+
+	public Dispositivo getDispostivo() {
+		return dispostivo;
+	}
+
+	public void setDispostivo(Dispositivo dispostivio) {
+		this.dispostivo = dispostivio;
+	}
+	
+	
 
 }

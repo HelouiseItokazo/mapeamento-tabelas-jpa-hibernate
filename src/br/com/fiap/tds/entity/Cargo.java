@@ -1,27 +1,51 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_CARGO")
-@SequenceGenerator(name = "cargo", sequenceName="SQ_T_CARGO", allocationSize = 1)
+@SequenceGenerator(name = "cargo", sequenceName = "SQ_T_CARGO", allocationSize = 1)
 public class Cargo {
-	
+
 	@Id
-	@Column(name="id_cargo")
+	@Column(name = "id_cargo")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cargo")
 	private Long id;
-	
-	@Column(name = "nm_localizacao", length = 50, nullable = false)
+
+	@Column(name = "nm_cargo", length = 50, nullable = false)
 	private String nome;
 
-	public Cargo() {}
+	@OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private List<Usuario> usuarios;
+
+	public void addUsuario(Usuario usuario) {
+		if (usuarios == null)
+			usuarios = new ArrayList<Usuario>();
+
+		usuario.setCargo(this);
+		usuarios.add(usuario);
+	}
+
+	public Cargo() {
+	}
 
 	public Cargo(String nome) {
 		this.nome = nome;
@@ -47,5 +71,5 @@ public class Cargo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 }

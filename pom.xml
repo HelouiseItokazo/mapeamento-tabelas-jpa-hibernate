@@ -21,13 +21,13 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.4.12.Final</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>oracle</groupId> -->
-<!-- 			<artifactId>jdbc-driver</artifactId> -->
-<!-- 			<version>12</version> -->
-<!-- 			<scope>system</scope> -->
-<!-- 			<systemPath>C://Users//helou//Downloads//ojdbc8.jar</systemPath> -->
-
-<!-- 		</dependency> -->
+		<!-- INFORMAR ABAIXO O SYSTEMPATH -->
+<!-- 		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>jdbc-driver</artifactId>
+			<version>12</version>
+			<scope>system</scope>
+			<systemPath></systemPath>
+		</dependency> -->
 	</dependencies>
 </project>

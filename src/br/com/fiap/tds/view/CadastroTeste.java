@@ -1,3 +1,9 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.view;
 
 import java.util.Calendar;
@@ -52,12 +58,12 @@ public class CadastroTeste {
 		//Instanciar objetos
 		Setor setor = new Setor("Recepção");
 		Cargo cargo = new Cargo("Recepcionista");
-		Ambiente ambiente = new Ambiente(1l, "Recepção", 1, 2.5, 1.0, "Recepção");
-		Usuario usuario = new Usuario(1l, 1l, "Thiago");
+		Ambiente ambiente = new Ambiente(setor, "Recepção", 1, 2.5, 1.0, "Recepção");
+		Usuario usuario = new Usuario(cargo, setor, "Thiago");
 		Login login = new Login(1l, "thiago2021@gmail.com", "#@123vamoscriptograr^");
-		Dispositivo dipositivo = new Dispositivo(1l, "DeviceWearableDoThiago");
+		Dispositivo dipositivo = new Dispositivo(usuario, "DeviceWearableDoThiago");
 		Chamado chamado = new Chamado(StatusEnum.PENDENTES, ChamadoEnum.EMERGENCIAEXTREMA, Calendar.getInstance());
-		ChamadoUsuario chamadoUsuario = new ChamadoUsuario(1l, 1l, Calendar.getInstance(), 2l);
+		ChamadoUsuario chamadoUsuario = new ChamadoUsuario(usuario, chamado, Calendar.getInstance(), 2l);
 		
 		//Persistindo objetos
 		try {

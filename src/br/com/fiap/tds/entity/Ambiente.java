@@ -1,10 +1,21 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,8 +29,9 @@ public class Ambiente {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ambiente")
 	private Long id;
 	
-	@Column(name = "id_setor", nullable = false)
-	private Long idSetor;
+	@ManyToOne
+	@JoinColumn(name = "id_setor", nullable = false)
+	private Setor setor;
 	
 	@Column(name = "nm_ambiente", length = 50, nullable = false)
 	private String nome;
@@ -35,12 +47,15 @@ public class Ambiente {
 
 	@Column(name = "nm_localizacao", length = 50, nullable = false)
 	private String nomeLocalizacao;
-
+	
+	@OneToOne(mappedBy = "ambiente", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	private Dispositivo dispositivo;
+	
 	public Ambiente() {}
 
-	public Ambiente(Long idSetor, String nome, Integer andar, Double tamanho, Double numeroProximidade,
+	public Ambiente(Setor setor, String nome, Integer andar, Double tamanho, Double numeroProximidade,
 			String nomeLocalizacao) {
-		this.idSetor = idSetor;
+		this.setor = setor;
 		this.nome = nome;
 		this.andar = andar;
 		this.tamanho = tamanho;
@@ -48,9 +63,9 @@ public class Ambiente {
 		this.nomeLocalizacao = nomeLocalizacao;
 	}
 	
-	public Ambiente(Long id, Long idSetor, String nome, Integer andar, Double tamanho, Double numeroProximidade,
+	public Ambiente(Long id, Setor setor, String nome, Integer andar, Double tamanho, Double numeroProximidade,
 			String nomeLocalizacao) {
-		this(idSetor, nome, andar, tamanho, numeroProximidade, nomeLocalizacao);
+		this(setor, nome, andar, tamanho, numeroProximidade, nomeLocalizacao);
 		this.id = id;
 	}
 
@@ -62,12 +77,12 @@ public class Ambiente {
 		this.id = id;
 	}
 
-	public Long getSetor() {
-		return idSetor;
+	public Setor getSetor() {
+		return setor;
 	}
 
-	public void setSetor(Long idSetor) {
-		this.idSetor = idSetor;
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
 
 	public String getNome() {
@@ -108,6 +123,15 @@ public class Ambiente {
 
 	public void setNomeLocalizacao(String nomeLocalizacao) {
 		this.nomeLocalizacao = nomeLocalizacao;
+	}
+
+	public Dispositivo getDispositivo() {
+		return dispositivo;
+	}
+
+	public void setDispositivo(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
 	}	
+	
 	
 }

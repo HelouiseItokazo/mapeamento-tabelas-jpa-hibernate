@@ -1,12 +1,24 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.fiap.tds.enumeration.TipoDispositivoEnum;
 
 @Entity
 @Table(name = "T_DISPOSITIVO")
@@ -18,25 +30,31 @@ public class Dispositivo {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dispositivo")
 	private Long id;
 	
-	@Column(name = "id_usuario")
-	private Long idUsuario;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
 	
-	@Column(name = "id_ambiente")
-	private Long idAmbiente;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_ambiente")
+	private Ambiente ambiente;
 	
 	@Column(name = "nm_dispositivo", length = 50, nullable = false)
 	private String nome;
+	
+	private TipoDispositivoEnum tipo;
 
 	public Dispositivo() {}
 
-	public Dispositivo(Long idUsuario, String nome) {
-		this.idUsuario = idUsuario;
+	public Dispositivo(Usuario usuario, String nome) {
+		this.tipo = TipoDispositivoEnum.WEAREABLE;
+		this.usuario = usuario;
 		this.nome = nome;
 	}
 
-	public Dispositivo(Long id, Long idAmbiente, String nome) {
-		this(idAmbiente, nome);
-		this.id = id;
+	public Dispositivo(Ambiente ambiente, String nome) {
+		this.tipo = TipoDispositivoEnum.AMBIENTE;
+		this.nome = nome;
+		this.ambiente = ambiente;
 	}
 
 	public Long getId() {
@@ -47,20 +65,20 @@ public class Dispositivo {
 		this.id = id;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Long getIdAmbiente() {
-		return idAmbiente;
+	public Ambiente getAmbiente() {
+		return ambiente;
 	}
 
-	public void setIdAmbiente(Long idAmbiente) {
-		this.idAmbiente = idAmbiente;
+	public void setAmbiente(Ambiente ambiente) {
+		this.ambiente = ambiente;
 	}
 
 	public String getNome() {

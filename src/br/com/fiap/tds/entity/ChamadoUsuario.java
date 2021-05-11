@@ -1,3 +1,9 @@
+/** MANUTENÇÃO DE FONTE
+ * @author Gabriel
+ * @Description Implementação dos relacionamentos
+ * @Date 11/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
 import java.util.Calendar;
@@ -7,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,11 +34,13 @@ public class ChamadoUsuario {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chamadoUsuario")
 	private Long id;
 	
-	@Column(name = "id_usuario", nullable = false)
-	private Long idUsuario;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario", nullable = false)
+	private Usuario usuario;
 	
-	@Column(name = "id_chamado", nullable = false)
-	private Long idChamado;
+	@ManyToOne
+	@JoinColumn(name = "id_chamado", nullable = false)
+	private Chamado chamado;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -37,19 +48,19 @@ public class ChamadoUsuario {
 	private Calendar dataEHora;
 	
 	@Column(name = "id_usuario_solicitado", nullable = false)
-	private Long idUsuarioSolicitando;
+	private Long idUsuarioSolicitado;
 
 	public ChamadoUsuario() {}
 
-	public ChamadoUsuario(Long idUsuario, Long idChamado, Calendar dataEHora, Long idUsuarioSolicitando) {
-		this.idUsuario = idUsuario;
-		this.idChamado = idChamado;
+	public ChamadoUsuario(Usuario usuario, Chamado chamado, Calendar dataEHora, Long idUsuarioSolicitado) {
+		this.usuario = usuario;
+		this.chamado = chamado;
 		this.dataEHora = dataEHora;
-		this.idUsuarioSolicitando = idUsuarioSolicitando;
+		this.idUsuarioSolicitado = idUsuarioSolicitado;
 	}
 
-	public ChamadoUsuario(Long id, Long idUsuario, Long idChamado, Calendar dataEHora, Long idUsuarioSolicitando) {
-		this(idUsuario, idChamado, dataEHora, idUsuarioSolicitando);
+	public ChamadoUsuario(Long id, Usuario usuario, Chamado chamado, Calendar dataEHora, Long idUsuarioSolicitando) {
+		this(usuario, chamado, dataEHora, idUsuarioSolicitando);
 		this.id = id;
 	}
 
@@ -61,20 +72,20 @@ public class ChamadoUsuario {
 		this.id = id;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Long getIdChamado() {
-		return idChamado;
+	public Chamado getChamado() {
+		return chamado;
 	}
 
-	public void setIdChamado(Long idChamado) {
-		this.idChamado = idChamado;
+	public void setChamado(Chamado chamado) {
+		this.chamado = chamado;
 	}
 
 	public Calendar getDataEHora() {
@@ -85,12 +96,12 @@ public class ChamadoUsuario {
 		this.dataEHora = dataEHora;
 	}
 
-	public Long getIdUsuarioSolicitando() {
-		return idUsuarioSolicitando;
+	public Long getIdUsuarioSolicitado() {
+		return idUsuarioSolicitado;
 	}
 
-	public void setIdUsuarioSolicitando(Long idUsuarioSolicitando) {
-		this.idUsuarioSolicitando = idUsuarioSolicitando;
+	public void setIdUsuarioSolicitado(Long idUsuarioSolicitando) {
+		this.idUsuarioSolicitado = idUsuarioSolicitando;
 	}
 	
 }
