@@ -1,10 +1,20 @@
+/**
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
+ */
+
 package br.com.fiap.tds.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -14,12 +24,13 @@ import javax.persistence.Table;
 public class Login {
 	
 	@Id
-	@Column(name="id_login")
+	@Column(name="id_login", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "login")
 	private Long id;
 	
-	@Column(name = "id_usuario",  nullable = false)
-	private Long idUsuario;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_usuario", nullable = false, unique = true)
+	private Usuario usuario;
 	
 	@Column(name = "ds_email", length = 200, nullable = false)
 	private String email;
@@ -30,14 +41,14 @@ public class Login {
 
 	public Login() {}
 
-	public Login(Long idUsuario, String email, String senha) {
-		this.idUsuario = idUsuario;
+	public Login(Usuario usuario, String email, String senha) {
+		this.usuario = usuario;
 		this.email = email;
 		this.senha = senha;
 	}
 
-	public Login(Long id, Long idUsuario, String email, String senha) {
-		this(idUsuario, email, senha);
+	public Login(Long id, Usuario usuario, String email, String senha) {
+		this(usuario, email, senha);
 		this.id = id;
 	}
 
@@ -49,12 +60,12 @@ public class Login {
 		this.id = id;
 	}
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getEmail() {
@@ -72,5 +83,7 @@ public class Login {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	
 	
 }

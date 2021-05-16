@@ -2,24 +2,25 @@
  * @author Gabriel
  * @Description Implementação dos relacionamentos
  * @Date 11/05/2021
+ * 
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.entity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,18 +37,16 @@ import br.com.fiap.tds.enumeration.StatusEnum;
 public class Chamado {
 	
 	@Id
-	@Column(name="id_chamado")
+	@Column(name="id_chamado", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chamado")
 	private Long id;
 	
-	//TODO VERIFICAR
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_status", nullable = false)
+	@Column(name = "id_status", nullable = false, length = 50)
 	private StatusEnum status;
 	
-	//TODO VERIFICAR
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_tipo_chamado", nullable = false)
+	@Column(name = "id_tipo_chamado", nullable = false, length = 50)
 	private ChamadoEnum tipoChamado;
 	
 	@CreationTimestamp
@@ -55,18 +54,8 @@ public class Chamado {
 	@Column(name = "dt_hr_chamado", updatable = false)
 	private Calendar dataEHora;	
 	
-	@OneToMany(mappedBy = "chamado", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-	private List<ChamadoUsuario> chamadosUsuario;
-	
-	public void addChamadoUsuario(ChamadoUsuario chamado) {
-		if (this.chamadosUsuario == null) {
-			this.chamadosUsuario = new ArrayList<ChamadoUsuario>();
-			
-			chamado.setChamado(this);
-			chamadosUsuario.add(chamado);
-		}
-	}
-
+	@ManyToMany(mappedBy = "chamados")
+	private List<Usuario> usuarios;
 
 	public Chamado() {}
 
@@ -111,6 +100,16 @@ public class Chamado {
 
 	public void setDataEHora(Calendar dataEHora) {
 		this.dataEHora = dataEHora;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}	
+	
+	
 	
 }

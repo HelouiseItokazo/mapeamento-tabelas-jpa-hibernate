@@ -2,6 +2,10 @@
  * @author Gabriel
  * @Description Implementação dos relacionamentos
  * @Date 11/05/2021
+ * 
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.entity;
@@ -26,16 +30,16 @@ import br.com.fiap.tds.enumeration.TipoDispositivoEnum;
 public class Dispositivo {
 	
 	@Id
-	@Column(name="id_dispositivo")
+	@Column(name="id_dispositivo", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dispositivo")
 	private Long id;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_usuario", unique = true)
 	private Usuario usuario;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_ambiente")
+	@JoinColumn(name = "id_ambiente", unique = true)
 	private Ambiente ambiente;
 	
 	@Column(name = "nm_dispositivo", length = 50, nullable = false)
@@ -88,5 +92,17 @@ public class Dispositivo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public TipoDispositivoEnum getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoDispositivoEnum tipo) {
+		if (this.usuario != null) 
+			this.tipo = TipoDispositivoEnum.WEAREABLE;
+		else
+		this.tipo = TipoDispositivoEnum.AMBIENTE;
+	}	
+	
 	
 }

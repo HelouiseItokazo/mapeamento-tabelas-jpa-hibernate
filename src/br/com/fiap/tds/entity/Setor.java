@@ -2,6 +2,10 @@
  * @author Gabriel
  * @Description Implementação dos relacionamentos
  * @Date 11/05/2021
+ * 
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.entity;
@@ -26,17 +30,17 @@ import javax.persistence.Table;
 public class Setor {
 	
 	@Id
-	@Column(name="id_setor")
+	@Column(name="id_setor", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "setor")
 	private Long id;
 	
 	@Column(name = "nm_setor", length = 50, nullable = false)
 	private String nome;
 	
-	@OneToMany(mappedBy = "setor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "setor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<Ambiente> ambientes;
 	
-	@OneToMany(mappedBy = "setor", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "setor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Usuario> usuarios;
 	
 	public void addUsuario(Usuario usuario) {
@@ -81,5 +85,23 @@ public class Setor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public List<Ambiente> getAmbientes() {
+		return ambientes;
+	}
+
+	public void setAmbientes(List<Ambiente> ambientes) {
+		this.ambientes = ambientes;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	
 
 }

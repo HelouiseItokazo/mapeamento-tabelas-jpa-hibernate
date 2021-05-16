@@ -2,11 +2,14 @@
  * @author Gabriel
  * @Description Implementação dos relacionamentos
  * @Date 11/05/2021
+ * 
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,8 +20,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,15 +33,18 @@ import javax.persistence.Table;
 public class Usuario {
 	
 	@Id
-	@Column(name="id_usuario")
+	@Column(name="id_usuario", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario")
 	private Long id;
 	
-	@ManyToOne
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Login login;
+	
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "id_cargo", nullable = false)
 	private Cargo cargo;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "id_setor", nullable = false)
 	private Setor setor;
 	
@@ -47,17 +54,11 @@ public class Usuario {
 	@Column(name = "nm_usuario", length = 100, nullable = false)
 	private String nome;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-	private List<ChamadoUsuario> chamadosUsuario;
-	
-	public void addChamadoUsuario(ChamadoUsuario chamado) {
-		if (this.chamadosUsuario == null) {
-			this.chamadosUsuario = new ArrayList<ChamadoUsuario>();
-			
-			chamado.setUsuario(this);
-			chamadosUsuario.add(chamado);
-		}
-	}
+	@ManyToMany(cascade = CascadeType.PERSIST)
+	@JoinTable(name = "T_USU_CHAMADO",
+				joinColumns = @JoinColumn(name="id_usuario"),
+				inverseJoinColumns = @JoinColumn(name="id_chamado"))
+	private List<Chamado> chamados;
 
 	public Usuario() {}
 
@@ -111,7 +112,21 @@ public class Usuario {
 	public void setDispostivo(Dispositivo dispostivio) {
 		this.dispostivo = dispostivio;
 	}
-	
-	
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public List<Chamado> getChamados() {
+		return chamados;
+	}
+
+	public void setChamados(List<Chamado> chamados) {
+		this.chamados = chamados;
+	} 
 
 }

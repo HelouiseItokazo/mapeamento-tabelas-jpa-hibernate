@@ -27,7 +27,7 @@
 			<artifactId>jdbc-driver</artifactId>
 			<version>12</version>
 			<scope>system</scope>
-			<systemPath></systemPath>
+			<systemPath>/ojdbc8.jar</systemPath>
 		</dependency> -->
 	</dependencies>
 </project>

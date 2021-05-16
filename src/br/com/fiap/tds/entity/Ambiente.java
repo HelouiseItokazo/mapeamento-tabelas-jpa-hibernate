@@ -2,6 +2,10 @@
  * @author Gabriel
  * @Description Implementação dos relacionamentos
  * @Date 11/05/2021
+ * 
+ * @author Gabriel
+ * @Description Atualização dos relacionamentos
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.entity;
@@ -25,11 +29,11 @@ import javax.persistence.Table;
 public class Ambiente {
 	
 	@Id
-	@Column(name="id_ambiente")
+	@Column(name="id_ambiente", length = 10, nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ambiente")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "id_setor", nullable = false)
 	private Setor setor;
 	
