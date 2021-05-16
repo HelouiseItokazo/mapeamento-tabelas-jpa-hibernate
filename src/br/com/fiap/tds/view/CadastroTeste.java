@@ -6,6 +6,10 @@
  * @author Gabriel
  * @Description Atualização dos relacionamentos para inserir com cascade
  * @Date 16/05/2021
+ * 
+ * @author Gabriel
+ * @Description Fechamento de conexões
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.view;
@@ -87,6 +91,7 @@ public class CadastroTeste {
 		
 		//fechar
 		em.close();
+		EntityManagerFactorySingleton.getInstance().createEntityManager().close();
 	}
 
 }

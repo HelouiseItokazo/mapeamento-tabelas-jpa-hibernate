@@ -102,7 +102,8 @@ public class BuscaTeste {
 			e.printStackTrace();
 		}
 		
-		
+		em.close();
+		EntityManagerFactorySingleton.getInstance().createEntityManager().close();
 		
 	}
 

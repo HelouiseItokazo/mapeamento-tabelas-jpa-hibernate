@@ -2,6 +2,10 @@
  * @author Gabriel
  * @Description Implementação inicial
  * @Date 16/05/2021
+ * 
+ * @author Gabriel
+ * @Description Fechamento de conexões
+ * @Date 16/05/2021
  */
 
 package br.com.fiap.tds.view;
@@ -45,5 +49,6 @@ public class CadastroTeste3 {
 		
 		//fechar
 		em.close();
+		EntityManagerFactorySingleton.getInstance().createEntityManager().close();
 	}
 }
